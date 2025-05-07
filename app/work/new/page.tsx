@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useAuth } from '@/lib/auth';
-import { PageHeader } from '@/components/layout/page-header';
-import { WorkForm } from '@/components/work/work-form';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertCircle } from 'lucide-react';
+import { useAuth } from "@/lib/auth";
+import { PageHeader } from "@/components/layout/page-header";
+import { WorkForm } from "@/components/work/work-form";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 export default function NewWorkPage() {
   const { user } = useAuth();
@@ -26,9 +26,9 @@ export default function NewWorkPage() {
   return (
     <div className="container max-w-4xl mx-auto px-4 py-8">
       <PageHeader path="/work/new" description="新しい作業内容を登録します" />
-      
-      <WorkForm 
-        userId={user.id} 
+
+      <WorkForm
+        userId={user.id}
         departmentId={user.department_id}
         departmentFlag={user.department_flag}
       />

@@ -1,17 +1,16 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { 
-  Users, 
-  Building2, 
-  Store, 
-  FolderKanban, 
-  Tags, 
-  ClipboardCheck,
-  Bell, 
-  FileText 
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
+import Link from "next/link";
+import {
+  Users,
+  Building2,
+  Store,
+  FolderKanban,
+  Tags,
+  Bell,
+  FileText,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface AdminMenuItem {
   href: string;
@@ -22,46 +21,46 @@ interface AdminMenuItem {
 
 const adminMenuItems: AdminMenuItem[] = [
   {
-    href: '/admin/users',
-    label: 'ユーザー管理',
+    href: "/admin/users",
+    label: "ユーザー管理",
     icon: Users,
-    description: 'ユーザーアカウントの作成・編集・停止',
+    description: "ユーザーアカウントの作成・編集・停止",
   },
   {
-    href: '/admin/departments',
-    label: '部署管理',
+    href: "/admin/departments",
+    label: "部署管理",
     icon: Building2,
-    description: '部署の追加・編集・無効化',
+    description: "部署の追加・編集・無効化",
   },
   {
-    href: '/admin/customers',
-    label: '顧客管理',
+    href: "/admin/customers",
+    label: "顧客管理",
     icon: Store,
-    description: '顧客情報の追加・編集・無効化',
+    description: "顧客情報の追加・編集・無効化",
   },
   {
-    href: '/admin/projects',
-    label: '案件管理',
+    href: "/admin/projects",
+    label: "案件管理",
     icon: FolderKanban,
-    description: '案件の追加・編集・無効化',
+    description: "案件の追加・編集・無効化",
   },
   {
-    href: '/admin/categories',
-    label: 'カテゴリ管理',
+    href: "/admin/categories",
+    label: "カテゴリ管理",
     icon: Tags,
-    description: '作業カテゴリの追加・編集・無効化',
+    description: "作業カテゴリの追加・編集・無効化",
   },
   {
-    href: '/admin/reminders',
-    label: 'リマインダー設定',
+    href: "/admin/reminders",
+    label: "リマインダー設定",
     icon: Bell,
-    description: '未入力リマインダーの設定・編集',
+    description: "未入力リマインダーの設定・編集",
   },
   {
-    href: '/admin/logs',
-    label: 'ログ閲覧',
+    href: "/admin/logs",
+    label: "ログ閲覧",
     icon: FileText,
-    description: 'ユーザーの操作ログを閲覧',
+    description: "ユーザーの操作ログを閲覧",
   },
 ];
 

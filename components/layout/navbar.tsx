@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useAuth } from '@/lib/auth';
-import { Button } from '@/components/ui/button';
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useAuth } from "@/lib/auth";
+import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard,
   ClipboardList,
@@ -12,10 +12,10 @@ import {
   LogOut,
   Menu,
   X,
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useState } from 'react';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 interface NavItem {
   href: string;
@@ -26,18 +26,18 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   {
-    href: '/work',
-    label: '作業一覧',
+    href: "/work",
+    label: "作業一覧",
     icon: ClipboardList,
   },
   {
-    href: '/aggregation',
-    label: '工数集計',
+    href: "/aggregation",
+    label: "工数集計",
     icon: BarChart3,
   },
   {
-    href: '/admin',
-    label: 'システム管理',
+    href: "/admin",
+    label: "システム管理",
     icon: Settings,
     adminOnly: true,
   },
@@ -49,18 +49,18 @@ export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  const isAdmin = user?.system_privilege === 'システム管理者';
+  const isAdmin = user?.system_privilege === "システム管理者";
 
   const handleLogout = () => {
     logout();
-    router.push('/login');
+    router.push("/login");
   };
 
   const filteredNavItems = navItems.filter(
     (item) => !item.adminOnly || (item.adminOnly && isAdmin)
   );
 
-  if (pathname === '/login' || pathname.startsWith('/password-reset')) {
+  if (pathname === "/login" || pathname.startsWith("/password-reset")) {
     return null;
   }
 
@@ -79,10 +79,10 @@ export function Navbar() {
               key={item.href}
               href={item.href}
               className={cn(
-                'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors',
+                "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
                 pathname === item.href || pathname.startsWith(`${item.href}/`)
-                  ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-muted'
+                  ? "bg-primary text-primary-foreground"
+                  : "hover:bg-muted"
               )}
             >
               <item.icon className="mr-2 h-4 w-4" />
@@ -124,10 +124,11 @@ export function Navbar() {
                   href={item.href}
                   onClick={() => setOpen(false)}
                   className={cn(
-                    'flex items-center py-2 px-3 rounded-md transition-colors',
-                    pathname === item.href || pathname.startsWith(`${item.href}/`)
-                      ? 'bg-primary text-primary-foreground'
-                      : 'hover:bg-muted'
+                    "flex items-center py-2 px-3 rounded-md transition-colors",
+                    pathname === item.href ||
+                      pathname.startsWith(`${item.href}/`)
+                      ? "bg-primary text-primary-foreground"
+                      : "hover:bg-muted"
                   )}
                 >
                   <item.icon className="mr-2 h-5 w-5" />
@@ -144,7 +145,9 @@ export function Navbar() {
             <div className="flex items-center">
               <div className="hidden md:block text-sm mr-4">
                 <span className="text-muted-foreground mr-2">
-                  {user.department_id ? getDepartmentName(user.department_id) : ''}
+                  {user.department_id
+                    ? getDepartmentName(user.department_id)
+                    : ""}
                 </span>
                 <span className="font-medium">{user.name}</span>
               </div>
@@ -162,12 +165,12 @@ export function Navbar() {
 
 function getDepartmentName(departmentId: number): string {
   const departments = {
-    1: '営業部',
-    2: '開発部',
-    3: 'カスタマーサポート部',
-    4: '人事部',
-    5: '総務部',
+    1: "営業部",
+    2: "開発部",
+    3: "カスタマーサポート部",
+    4: "人事部",
+    5: "総務部",
   };
-  
-  return departments[departmentId as keyof typeof departments] || '';
+
+  return departments[departmentId as keyof typeof departments] || "";
 }

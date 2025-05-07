@@ -1,16 +1,29 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import Link from 'next/link';
-import { useAuth } from '@/lib/auth';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { useToast } from '@/hooks/use-toast';
-import { LayoutDashboard, Mail, KeyRound, AlertCircle, ArrowLeft } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useAuth } from "@/lib/auth";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+import {
+  LayoutDashboard,
+  Mail,
+  KeyRound,
+  AlertCircle,
+  ArrowLeft,
+} from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function PasswordResetPage() {
   const router = useRouter();
@@ -18,10 +31,10 @@ export default function PasswordResetPage() {
   const { resetPassword, setNewPassword } = useAuth();
   const { toast } = useToast();
 
-  const token = searchParams.get('token');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const token = searchParams.get("token");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -34,18 +47,18 @@ export default function PasswordResetPage() {
 
     try {
       const result = await resetPassword(email);
-      
+
       if (result.success) {
         setSuccess(result.message);
         toast({
-          title: 'メール送信',
-          description: 'パスワードリセットのメールを送信しました',
+          title: "メール送信",
+          description: "パスワードリセットのメールを送信しました",
         });
       } else {
         setError(result.message);
       }
     } catch (err) {
-      setError('エラーが発生しました');
+      setError("エラーが発生しました");
     } finally {
       setIsLoading(false);
     }
@@ -58,39 +71,40 @@ export default function PasswordResetPage() {
     setIsLoading(true);
 
     if (password !== confirmPassword) {
-      setError('パスワードが一致しません');
+      setError("パスワードが一致しません");
       setIsLoading(false);
       return;
     }
 
     if (password.length < 8) {
-      setError('パスワードは8文字以上で入力してください');
+      setError("パスワードは8文字以上で入力してください");
       setIsLoading(false);
       return;
     }
 
     try {
       if (!token) {
-        setError('無効なリクエストです');
+        setError("無効なリクエストです");
         return;
       }
 
       const result = await setNewPassword(token, password);
-      
+
       if (result.success) {
-        setSuccess('パスワードが正常に更新されました');
+        setSuccess("パスワードが正常に更新されました");
         toast({
-          title: 'パスワード更新',
-          description: 'パスワードが更新されました。新しいパスワードでログインできます。',
+          title: "パスワード更新",
+          description:
+            "パスワードが更新されました。新しいパスワードでログインできます。",
         });
         setTimeout(() => {
-          router.push('/login');
+          router.push("/login");
         }, 2000);
       } else {
         setError(result.message);
       }
     } catch (err) {
-      setError('エラーが発生しました');
+      setError("エラーが発生しました");
     } finally {
       setIsLoading(false);
     }
@@ -105,9 +119,13 @@ export default function PasswordResetPage() {
               <LayoutDashboard className="h-6 w-6" />
             </div>
           </div>
-          <CardTitle className="text-2xl text-center">パスワード再設定</CardTitle>
+          <CardTitle className="text-2xl text-center">
+            パスワード再設定
+          </CardTitle>
           <CardDescription className="text-center">
-            {token ? 'パスワードを新しく設定してください' : 'メールアドレスを入力してリセットリンクを取得'}
+            {token
+              ? "パスワードを新しく設定してください"
+              : "メールアドレスを入力してリセットリンクを取得"}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -117,13 +135,13 @@ export default function PasswordResetPage() {
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          
+
           {success && (
             <Alert className="mb-4 bg-primary/10">
               <AlertDescription>{success}</AlertDescription>
             </Alert>
           )}
-          
+
           {token ? (
             <form onSubmit={handleSetNewPassword} className="space-y-4">
               <div className="space-y-2">
@@ -157,7 +175,7 @@ export default function PasswordResetPage() {
                 </div>
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? '処理中...' : 'パスワードを更新'}
+                {isLoading ? "処理中..." : "パスワードを更新"}
               </Button>
             </form>
           ) : (
@@ -178,7 +196,7 @@ export default function PasswordResetPage() {
                 </div>
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? '送信中...' : 'リセットリンクを送信'}
+                {isLoading ? "送信中..." : "リセットリンクを送信"}
               </Button>
             </form>
           )}

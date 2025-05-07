@@ -1,4 +1,4 @@
-import { getPageTitle } from '@/lib/utils';
+import { getPageTitle } from "@/lib/utils";
 
 interface PageHeaderProps {
   path: string;

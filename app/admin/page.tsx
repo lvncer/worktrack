@@ -1,29 +1,29 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/lib/auth';
-import { PageHeader } from '@/components/layout/page-header';
-import { AdminMenu } from '@/components/admin/admin-menu';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertCircle } from 'lucide-react';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/auth";
+import { PageHeader } from "@/components/layout/page-header";
+import { AdminMenu } from "@/components/admin/admin-menu";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 export default function AdminPage() {
   const router = useRouter();
   const { user, status } = useAuth();
-  
+
   // システム管理者のみアクセス可能
-  const isAdmin = user?.system_privilege === 'システム管理者';
-  
+  const isAdmin = user?.system_privilege === "システム管理者";
+
   useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/login');
-    } else if (status === 'authenticated' && !isAdmin) {
-      router.push('/work');
+    if (status === "unauthenticated") {
+      router.push("/login");
+    } else if (status === "authenticated" && !isAdmin) {
+      router.push("/work");
     }
   }, [router, status, isAdmin]);
 
-  if (status === 'loading') {
+  if (status === "loading") {
     return (
       <div className="container max-w-screen-xl mx-auto px-4 py-8">
         <div className="flex items-center justify-center h-64">
@@ -49,8 +49,11 @@ export default function AdminPage() {
 
   return (
     <div className="container max-w-screen-xl mx-auto px-4 py-8">
-      <PageHeader path="/admin" description="各種マスタデータの管理、システム設定を行います" />
-      
+      <PageHeader
+        path="/admin"
+        description="各種マスタデータの管理、システム設定を行います"
+      />
+
       <AdminMenu />
     </div>
   );

@@ -1,24 +1,31 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { useAuth } from '@/lib/auth';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { useToast } from '@/hooks/use-toast';
-import { LayoutDashboard, KeyRound, Mail, AlertCircle } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useAuth } from "@/lib/auth";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+import { LayoutDashboard, KeyRound, Mail, AlertCircle } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function LoginPage() {
   const router = useRouter();
   const { login, status } = useAuth();
   const { toast } = useToast();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,18 +36,18 @@ export default function LoginPage() {
 
     try {
       const result = await login(email, password);
-      
+
       if (result.success) {
         toast({
-          title: 'ログイン成功',
-          description: 'システムにようこそ',
+          title: "ログイン成功",
+          description: "システムにようこそ",
         });
-        router.push('/work');
+        router.push("/work");
       } else {
         setError(result.message);
       }
     } catch (err) {
-      setError('ログイン中にエラーが発生しました');
+      setError("ログイン中にエラーが発生しました");
     } finally {
       setIsLoading(false);
     }
@@ -67,7 +74,7 @@ export default function LoginPage() {
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          
+
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">メールアドレス</Label>
@@ -108,7 +115,7 @@ export default function LoginPage() {
               </div>
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? 'ログイン中...' : 'ログイン'}
+              {isLoading ? "ログイン中..." : "ログイン"}
             </Button>
           </form>
         </CardContent>
