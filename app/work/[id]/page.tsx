@@ -19,6 +19,11 @@ export default function EditWorkPage() {
 
   useEffect(() => {
     if (!user) return;
+    if (!id) {
+      setError("作業IDが見つかりません");
+      setLoading(false);
+      return;
+    }
 
     const workLogId = Array.isArray(id) ? parseInt(id[0]) : parseInt(id);
     if (isNaN(workLogId)) {

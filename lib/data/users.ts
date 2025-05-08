@@ -105,9 +105,9 @@ export function getUserWithDepartment(userId: number) {
   const user = getUserById(userId);
   if (!user) return null;
 
-  const department = getDepartmentById(user.department_id);
-  return {
-    ...user,
-    department: department || null,
-  };
+  // const department = getDepartmentById(user.department_id);
+  // return {
+  //   ...user,
+  //   department: department || null,
+  // };
 }

@@ -33,7 +33,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useToast } from "@/hooks/use-toast";
 import {
   addWorkLog,
   updateWorkLog,
@@ -79,7 +78,6 @@ export function WorkForm({
   isEdit = false,
 }: WorkFormProps) {
   const router = useRouter();
-  const { toast } = useToast();
 
   const [customers, setCustomers] = useState(getActiveCustomers());
   const [projects, setProjects] = useState(getActiveProjects());
@@ -162,27 +160,13 @@ export function WorkForm({
 
       if (isEdit && workLogId) {
         updateWorkLog(workLogId, workLogData);
-        toast({
-          title: "更新完了",
-          description: "作業内容が更新されました",
-        });
       } else {
         addWorkLog(
           workLogData as Omit<WorkLog, "id" | "created_at" | "updated_at">
         );
-        toast({
-          title: "登録完了",
-          description: "作業内容が登録されました",
-        });
       }
-
       router.push("/work");
     } catch (error) {
-      toast({
-        title: "エラー",
-        description: "保存中にエラーが発生しました",
-        variant: "destructive",
-      });
     } finally {
       setIsSubmitting(false);
       setShowConfirmDialog(false);

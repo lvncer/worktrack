@@ -15,14 +15,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
 import { LayoutDashboard, KeyRound, Mail, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function LoginPage() {
   const router = useRouter();
   const { login, status } = useAuth();
-  const { toast } = useToast();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,10 +36,6 @@ export default function LoginPage() {
       const result = await login(email, password);
 
       if (result.success) {
-        toast({
-          title: "ログイン成功",
-          description: "システムにようこそ",
-        });
         router.push("/work");
       } else {
         setError(result.message);

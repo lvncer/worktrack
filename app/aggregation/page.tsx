@@ -39,7 +39,6 @@ import {
   BarChart2,
   PieChart as PieChartIcon,
 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
 import {
   filterWorkLogs,
   getWorkLogWithDetails,
@@ -56,7 +55,6 @@ type AggregationType = "customer" | "project" | "category" | "user" | "date";
 
 export default function AggregationPage() {
   const { user } = useAuth();
-  const { toast } = useToast();
 
   // 設定データ
   const departments = getActiveDepartments();
@@ -141,11 +139,6 @@ export default function AggregationPage() {
       aggregateData(logsWithDetails);
     } catch (error) {
       console.error("Error searching:", error);
-      toast({
-        title: "エラー",
-        description: "データの集計中にエラーが発生しました",
-        variant: "destructive",
-      });
     } finally {
       setLoading(false);
     }
@@ -234,14 +227,7 @@ export default function AggregationPage() {
   };
 
   const handleExportCSV = () => {
-    if (!aggregationResults.length) {
-      toast({
-        title: "警告",
-        description: "エクスポートするデータがありません",
-        variant: "destructive",
-      });
-      return;
-    }
+    if (!aggregationResults.length) return;
 
     const csvData = aggregationResults.map((item) => ({
       名称: item.name,
@@ -260,11 +246,6 @@ export default function AggregationPage() {
 
     const csvString = jsonToCSV(csvData);
     downloadCSV(csvString, filename);
-
-    toast({
-      title: "エクスポート完了",
-      description: "データがCSVファイルとしてエクスポートされました",
-    });
   };
 
   if (!user) {
@@ -507,7 +488,7 @@ export default function AggregationPage() {
                           <YAxis />
                           <Tooltip
                             formatter={(value) => [
-                              `${value.toFixed(2)} 時間`,
+                              `${parseFloat(value as string).toFixed(2)} 時間`,
                               "作業時間",
                             ]}
                           />
@@ -551,7 +532,9 @@ export default function AggregationPage() {
                               ))}
                           </Pie>
                           <Tooltip
-                            formatter={(value) => `${value.toFixed(2)} 時間`}
+                            formatter={(value) =>
+                              `${parseFloat(value as string).toFixed(2)} 時間`
+                            }
                           />
                         </PieChart>
                       </ResponsiveContainer>

@@ -38,7 +38,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useToast } from "@/hooks/use-toast";
 import {
   deleteWorkLog,
   filterWorkLogs,
@@ -55,7 +54,6 @@ import { formatDate, formatTime, calculateDuration } from "@/lib/utils";
 export default function WorkListPage() {
   const router = useRouter();
   const { user } = useAuth();
-  const { toast } = useToast();
 
   const [showFilterDialog, setShowFilterDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -127,11 +125,6 @@ export default function WorkListPage() {
       setWorkLogs(logsWithDetails.filter(Boolean));
     } catch (error) {
       console.error("Error applying filters:", error);
-      toast({
-        title: "エラー",
-        description: "データの取得中にエラーが発生しました",
-        variant: "destructive",
-      });
     } finally {
       setLoading(false);
     }
@@ -154,10 +147,6 @@ export default function WorkListPage() {
   const handleDeleteConfirm = () => {
     if (deleteWorkLogId) {
       deleteWorkLog(deleteWorkLogId);
-      toast({
-        title: "削除完了",
-        description: "作業内容が削除されました",
-      });
       applyFilters();
     }
     setShowDeleteDialog(false);
